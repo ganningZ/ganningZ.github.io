@@ -1,78 +1,89 @@
+@import "nib"
+@import "_variables"
+@import "_util/mixin"
+@import "_util/grid"
 
-@import "_var"
-@import "_font"
+global-reset()
 
-*
-    margin: 0
+input, button
+  margin: 0
+  padding: 0
+  &::-moz-focus-inner
+    border: 0
     padding: 0
 
-html,body
-    height: 100%
-    width: 100%
+@font-face
+  font-family: FontAwesome
+  font-style: normal
+  font-weight: normal
+  src: url(font-icon-path + ".eot?v=#" + font-icon-version)
+  src: url(font-icon-path + ".eot?#iefix&v=#" + font-icon-version) format("embedded-opentype"),
+       url(font-icon-path + ".woff?v=#" + font-icon-version) format("woff"),
+       url(font-icon-path + ".ttf?v=#" + font-icon-version) format("truetype"),
+       url(font-icon-path + ".svg#fontawesomeregular?v=#" + font-icon-version) format("svg")
 
-html {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-
-*,
-*:before,
-*:after {
-    -webkit-box-sizing: inherit;
-    -moz-box-sizing: inherit;
-    box-sizing: inherit
-}
-
-html
-    box-sizing: border-box
-    -webkit-box-sizing: border-box
-    -moz-box-sizing: border-box
+html, body, #container
+  height: 100%
 
 body
-    font-family: font-mono
-    font-size: font-size
-    background-color: #fff
+  background: color-background
+  font: font-size font-sans
+  -webkit-text-size-adjust: 100%
 
+.outer
+  clearfix()
+  max-width: (column-width + gutter-width) * columns + gutter-width
+  margin: 0 auto
+  padding: 0 gutter-width
 
+.inner
+  column(columns)
 
-h1, h2, h3, h4, h5, h6
-    color: #666;
-    font-weight: 300;
+.left, .alignleft
+  float: left
 
-h1, h2, h3, h4, h5, h6, ul, ol, dl, blockquote, p, address, table, fieldset, figure, pre
-    margin-bottom: 30px;
-    margin-bottom: 1.875rem;
+.right, .alignright
+  float: right
 
+.clear
+  clear: both
 
-ol,li
-    list-style: none
+#container
+  position: relative
 
-a
-    color: #666666
-    text-decoration: none
+.mobile-nav-on
+  overflow: hidden
 
-abbr[title],dfn[title] 
-    cursor: help
+#wrap
+  height: 100%
+  width: 100%
+  position: absolute
+  top: 0
+  left: 0
+  transition: 0.2s ease-out
+  z-index: 1
+  background: color-background
+  .mobile-nav-on &
+    left: mobile-nav-width
 
-u,ins
-    text-decoration: none
+if sidebar and sidebar isnt bottom
+  #main
+    @media mq-normal
+      column(main-column)
 
-ins
-    border-bottom: 1px solid
+if sidebar is left
+  @media mq-normal
+    #main
+      float: right
 
+@import "_extend"
 @import "_partial/header"
-@import "_partial/banner"
-
-if search
-    @import "_partial/search"
+@import "_partial/article"
+@import "_partial/comment"
+@import "_partial/archive"
+@import "_partial/footer"
+@import "_partial/highlight"
+@import "_partial/mobile"
 
 if sidebar
-    @import "_partial/sidebar"
-
-@import "_partial/archive"
-@import "_partial/article"
-@import "_partial/post/share"
-
-@import "_partial/author"
-@import "_partial/footer"
+  @import "_partial/sidebar"
